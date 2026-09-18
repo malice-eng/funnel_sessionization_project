@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_sessions
+    description: >
+      One row per user session (sessionized with a 30-minute inactivity
+      timeout using gaps-and-islands). Includes duration, event count,
+      furthest funnel step reached, and conversion flag.
+    columns:
+      - name: session_id
+        description: Unique session identifier ({user_id}-{session_number}).
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+
+  - name: fct_funnel_steps
+    description: >
+      One row per session with a boolean flag for whether each funnel step
+      was reached. Feeds funnel_conversion.sql and is convenient for BI tools
+      that want raw flags instead of pre-aggregated rates.
+    columns:
+      - name: session_id
+        tests:
+          - unique
+          - not_null
+
+  - name: funnel_conversion
+    description: >
+      Funnel conversion rates overall and cut by channel and device.
+      Each row is a segment with counts at each step and step-over-step
+      conversion percentages.
+    columns:
+      - name: segment_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['overall', 'channel', 'device']
