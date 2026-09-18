@@ -1,0 +1,36 @@
+name: 'funnel_sessionization'
+version: '1.0.0'
+config-version: 2
+
+profile: 'funnel_sessionization'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  funnel_sessionization:
+    raw_events:
+      +column_types:
+        event_id: integer
+        user_id: varchar(10)
+        event_name: varchar(50)
+        event_timestamp: timestamp
+        device_type: varchar(20)
+        channel: varchar(30)
+        product_id: varchar(10)
+
+models:
+  funnel_sessionization:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

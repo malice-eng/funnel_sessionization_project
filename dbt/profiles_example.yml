@@ -1,0 +1,16 @@
+# Copy this to ~/.dbt/profiles.yml (create the ~/.dbt folder if it doesn't exist).
+# This matches the credentials in docker-compose.yml — change them in both places
+# if you customize them.
+
+funnel_sessionization:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: funnel_user
+      pass: funnel_pass
+      dbname: funnel_analytics
+      schema: analytics
+      threads: 4
