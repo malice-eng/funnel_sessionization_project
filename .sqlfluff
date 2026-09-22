@@ -1,0 +1,14 @@
+[sqlfluff]
+dialect = postgres
+templater = dbt
+max_line_length = 120
+
+[sqlfluff:templater:dbt]
+project_dir = dbt
+profiles_dir = dbt
+
+[sqlfluff:rules:LT02]
+indent_unit = spaces
+
+[sqlfluff:rules:CP01]
+capitalisation_policy = lower
